@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import boto3
-from io import StringIO
 from streamlit_autorefresh import st_autorefresh
 import plotly.express as px
 
@@ -33,7 +31,12 @@ st.markdown("""
 <hr>
 """, unsafe_allow_html=True)
 
+# Load local CSV instead of S3
+df = pd.read_csv("stocks_20260401_061342.csv")
+
+
 # AWS S3
+"""
 s3 = boto3.client('s3')
 
 bucket_name = "elian-stock-data-lake-2026"
@@ -55,6 +58,7 @@ else:
     df['change'] = df['current_price'] - df['previous_close']
     df['percent_change'] = (df['change'] / df['previous_close']) * 100
     df['volatility'] = df['high'] - df['low']
+    """
 
     # Sidebar
     st.sidebar.header("📊 Controls")
@@ -70,7 +74,8 @@ else:
     col3.metric("Top Price", round(df['current_price'].max(), 2))
     col4.metric("Lowest Price", round(df['current_price'].min(), 2))
 
-    st.caption(f"Last updated: {latest_file['LastModified']}")
+    #st.caption(f"Last updated: {latest_file['LastModified']}")
+    st.caption("Data shown is a snapshot from the live pipeline for demo purposes.")
 
     # 🔥 GRID METRICS (FIXED SPACING)
     st.subheader("📈 Stock Performance")
