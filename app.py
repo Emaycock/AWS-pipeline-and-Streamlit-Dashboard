@@ -32,7 +32,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load local CSV instead of S3
-df = pd.read_csv("stocks_20260401_061342.csv")
+    df = pd.read_csv("stocks_20260401_061342.csv")
 
 
 # AWS S3
